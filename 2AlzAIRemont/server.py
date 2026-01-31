@@ -18,7 +18,7 @@ BASE_DIR = Path(__file__).resolve().parent
 MODEL_DIR = BASE_DIR / "models"
 MODEL_DIR.mkdir(exist_ok=True)
 
-MODEL_FILENAME = "alz_vgg16_epoch5.h5"
+MODEL_FILENAME = "models/alz_vgg16_epoch5.h5"
 MODEL_PATH = MODEL_DIR / MODEL_FILENAME
 
 # 1) В Render -> Environment добавишь переменную GDRIVE_MODEL_ID
