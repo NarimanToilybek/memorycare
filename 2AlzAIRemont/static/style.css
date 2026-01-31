@@ -87,7 +87,7 @@
   /* ---------- PARALLAX CTA ---------- */
   .parallax-cta {
     position: relative;
-    background: url('assets/brain_bg.jpg') center / cover fixed no-repeat;
+    background: url('/brain_bg.jpg') center / cover fixed no-repeat;
     height: 350px;
     color: #000; /* чёрный текст */
   }
