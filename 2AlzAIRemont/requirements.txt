@@ -1,7 +1,8 @@
 fastapi
 uvicorn
+tensorflow==2.15.0
+numpy
 pillow
-numpy==1.26.4
-tensorflow==2.15.1
-gdown==5.2.0
 python-multipart
+gdown
+pydicom

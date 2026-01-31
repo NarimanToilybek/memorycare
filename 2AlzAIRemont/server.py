@@ -1,4 +1,8 @@
 # server.py
+
+import os
+import gdown
+
 import io, os
 import numpy as np
 from PIL import Image
@@ -8,37 +12,20 @@ import tensorflow as tf
 from tensorflow.keras.applications.vgg16 import preprocess_input
 
 # === ПУТЬ К ЛУЧШЕЙ МОДЕЛИ (epoch5) ===
-from pathlib import Path
-import os
+MODEL_DIR = "models"
+MODEL_NAME = "alz_vgg16_epoch5.h5"
+MODEL_PATH = os.path.join(MODEL_DIR, MODEL_NAME)
 
-# Папка где лежит server.py
-BASE_DIR = Path(__file__).resolve().parent
-
-# Куда сохраняем модель на Render
-MODEL_DIR = BASE_DIR / "models"
-MODEL_DIR.mkdir(exist_ok=True)
-
-MODEL_FILENAME = "models/alz_vgg16_epoch5.h5"
-MODEL_PATH = MODEL_DIR / MODEL_FILENAME
-
-# 1) В Render -> Environment добавишь переменную GDRIVE_MODEL_ID
-GDRIVE_MODEL_ID = os.getenv("GDRIVE_MODEL_ID", "").strip()
+MODEL_URL = "https://drive.google.com/uc?id=1Gpn4Aw-Hji0gVlvSZECYD15NoVze63Sj"
 
 def ensure_model():
-    if MODEL_PATH.exists():
-        return
+    os.makedirs(MODEL_DIR, exist_ok=True)
+    if not os.path.exists(MODEL_PATH):
+        print("Downloading model from Google Drive...")
+        gdown.download(MODEL_URL, MODEL_PATH, quiet=False)
 
-    if not GDRIVE_MODEL_ID:
-        raise RuntimeError("GDRIVE_MODEL_ID is not set, and model file is missing.")
-
-    # gdown умеет качать большие файлы с Drive (с confirm-страницей)
-    import gdown
-    url = f"https://drive.google.com/uc?id={GDRIVE_MODEL_ID}"
-    gdown.download(url, str(MODEL_PATH), quiet=False)
-
-# Скачиваем (если надо) и только потом грузим модель
 ensure_model()
-model = tf.keras.models.load_model(str(MODEL_PATH), compile=False)
+model = tf.keras.models.load_model(MODEL_PATH, compile=False)
 
 
 # Порядок классов (как при обучении): алфавит по именам папок
