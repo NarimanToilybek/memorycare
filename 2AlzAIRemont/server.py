@@ -11,6 +11,10 @@ from fastapi.middleware.cors import CORSMiddleware
 import tensorflow as tf
 from tensorflow.keras.applications.vgg16 import preprocess_input
 
+from fastapi.responses import FileResponse
+from fastapi.staticfiles import StaticFiles
+
+
 # === ПУТЬ К ЛУЧШЕЙ МОДЕЛИ (epoch5) ===
 MODEL_DIR = "models"
 MODEL_NAME = "alz_vgg16_epoch5.h5"
@@ -33,6 +37,18 @@ CLASS_NAMES = ["mild_demented", "moderate_demented", "no_demented", "very_mild_d
 IMG_SIZE = (224, 224)
 
 app = FastAPI()
+# Раздаём статические файлы (css/js/png/jpg)
+app.mount("/assets", StaticFiles(directory="assets"), name="assets")
+
+# Если у тебя style.css и script.js лежат в корне 2AlzAIRemont:
+# то их можно отдавать как есть (FastAPI сам не раздаёт файлы из корня),
+# поэтому проще тоже смонтировать корень как static:
+app.mount("/static", StaticFiles(directory="."), name="static")
+
+@app.get("/")
+def home():
+    return FileResponse("index.html")
+
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"], allow_credentials=True, allow_methods=["*"], allow_headers=["*"],
