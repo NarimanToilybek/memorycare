@@ -22,7 +22,7 @@ app.mount("/", StaticFiles(directory=STATIC_DIR, html=True), name="static")
 # ===== MODEL =====
 MODEL_NAME = "alz_vgg16_epoch5.h5"
 MODEL_PATH = os.path.join(MODELS_DIR, MODEL_NAME)
-MODEL_URL = "https://drive.google.com/uc?id=ТВОЙ_ID"
+MODEL_URL = "https://drive.google.com/uc?id=1Gpn4Aw-Hji0gVlvSZECYD15NoVze63Sj"
 
 os.makedirs(MODELS_DIR, exist_ok=True)
 
