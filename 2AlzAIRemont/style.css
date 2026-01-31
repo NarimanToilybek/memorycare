@@ -1,0 +1,129 @@
+:root {
+    --alz-primary: #2e72d2;
+    --alz-secondary: #83b6ff;
+    --alz-bg: #f8fbff;
+  }
+  
+  /* ---------- GLOBAL ---------- */
+  html,
+  body {
+    font-family: "Inter", Arial, sans-serif;
+    background: var(--alz-bg);
+    color: #000; /* текст теперь чёрный */
+    overflow-x: hidden;
+  }
+  
+  .pt-nav {
+    padding-top: 78px; /* высота навбара */
+  }
+  
+  /* ---------- HERO ---------- */
+  .hero {
+    background: #eaf2ff; /* мягкий однотонный голубой бэкграунд */
+    padding: 7rem 0 6rem;
+  }
+  
+  /* ---------- SECTION HELPERS ---------- */
+  .section-alt {
+    background: #ffffff; /* чистый фон для читабельности */
+  }
+  
+  .alz-btn {
+    background: var(--alz-primary);
+    border: none;
+  }
+  .alz-btn:hover {
+    background: #1e59b2;
+  }
+  
+  /* ---------- CARDS ---------- */
+  .stat-card {
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.05);
+  }
+  
+  .alz-card {
+    background: #fff;
+    border-radius: 16px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.06);
+    border: none;
+  }
+  
+  /* ---------- TIMELINE ---------- */
+  .timeline {
+    position: relative;
+    margin-left: 20px;
+  }
+  .timeline::before {
+    content: "";
+    position: absolute;
+    left: 18px;
+    top: 0;
+    bottom: 0;
+    width: 2px;
+    background: var(--alz-primary);
+  }
+  .tl-item {
+    position: relative;
+    margin-bottom: 2rem;
+    padding-left: 60px;
+  }
+  .tl-icon {
+    position: relative;
+    left: -2px;
+    top: 0;
+    width: 70px;
+    height: 70px;
+    border-radius: 90%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: #fff;
+  }
+  
+  /* ---------- PARALLAX CTA ---------- */
+  .parallax-cta {
+    position: relative;
+    background: url('assets/brain_bg.jpg') center / cover fixed no-repeat;
+    height: 350px;
+    color: #000; /* чёрный текст */
+  }
+  .parallax-cta::before { /* светлый overlay для контраста */
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: rgba(255, 255, 255, 0.6);
+  }
+  .parallax-cta > * {
+    position: relative;
+    z-index: 1;
+    color: #000
+  }
+  
+  
+  /* ---------- MEMORY GAME ---------- */
+  .memory-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 70px);
+    grid-gap: 10px;
+    justify-content: center;
+  }
+  .memory-grid button {
+    width: 70px;
+    height: 70px;
+    font-size: 1.8rem;
+    border-radius: 8px;
+  }
+  
+  .nav-pills .nav-link.active {
+    background: var(--alz-primary);
+  }
+  #cogResult {
+    line-height: 1.6;
+  }
+  #cogResult strong {
+    color: var(--alz-primary);
+  }

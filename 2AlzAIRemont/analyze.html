@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>ИИ-анализ МРТ | AlzAI</title>
+
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"/>
+  <link href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css" rel="stylesheet"/>
+  <link rel="stylesheet" href="style.css"/>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet"/>
+
+  <style>
+    #removeBtn { display: none; }
+    body { background: none; position: relative; }
+    body::before { content: ""; position: fixed; inset: 0; background: url('blue.png') center/cover no-repeat; z-index: -1; }
+
+    .alz-card { border-radius: 20px; box-shadow: 0 12px 30px rgba(0,0,0,0.1); background: #fff; }
+    h2 { letter-spacing: .5px; }
+    #mriPreview { display: none; transition: opacity .5s ease; max-height: 280px; }
+    .btn-alz { background: #2e72d2; color: #fff; border-radius: 8px; transition: background .3s; }
+    .btn-alz:hover { background: #245bb2; }
+  </style>
+</head>
+<body>
+  <!-- Navbar -->
+  <nav class="navbar navbar-light bg-white shadow-sm fixed-top">
+    <div class="container">
+      <a class="navbar-brand d-flex align-items-center" href="index.html">
+        <img src="assets/memorycare1.jpeg" alt="AlzAI" height="38" class="me-2"/>
+      </a>
+    </div>
+  </nav>
+
+  <main class="pt-nav" style="min-height: calc(100vh - 78px); display: flex; align-items: center;">
+    <div class="container">
+      <div class="row justify-content-center">
+        <div class="col-lg-6" data-aos="zoom-in">
+          <div class="alz-card p-5" id="mriCard">
+            <h2 class="fw-bold mb-4 text-center" data-aos="fade-down">ИИ-анализ МРТ</h2>
+
+            <form id="mriForm">
+              <div class="mb-4" data-aos="fade-right">
+                <label for="mriFile" class="form-label">Загрузите МРТ-снимок</label>
+                <input type="file" class="form-control" id="mriFile" accept=".jpg,.jpeg,.png,.dcm"/>
+              </div>
+
+              <div class="text-center mb-4" data-aos="fade-up">
+                <img id="mriPreview" class="img-fluid rounded" alt="Превью"/>
+                <button type="button" class="btn btn-outline-danger mt-2" id="removeBtn">Удалить</button>
+              </div>
+
+              <div class="d-grid" data-aos="fade-left">
+                <button type="submit" id="analyzeBtn" class="btn btn-alz py-2">Анализировать</button>
+              </div>
+            </form>
+
+            <div id="resultArea" class="alert mt-4 text-center d-none" role="alert"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
+  <script>
+    AOS.init({ once: true, duration: 700, easing: 'ease-out-cubic' });
+
+    document.addEventListener('DOMContentLoaded', () => {
+      const API_URL   = 'http://127.0.0.1:8000/predict'; // эндпоинт FastAPI
+      const fileInput = document.getElementById('mriFile');
+      const preview   = document.getElementById('mriPreview');
+      const removeBtn = document.getElementById('removeBtn');
+      const analyzeBtn= document.getElementById('analyzeBtn');
+      const resultArea= document.getElementById('resultArea');
+      const form      = document.getElementById('mriForm');
+
+      // Превью
+      fileInput.addEventListener('change', () => {
+        const file = fileInput.files[0];
+        if (file) {
+          preview.src = URL.createObjectURL(file);
+          preview.style.opacity = 0;
+          preview.style.display = 'block';
+          setTimeout(() => preview.style.opacity = 1, 50);
+          removeBtn.style.display = 'inline-block';
+        } else {
+          preview.style.display = 'none';
+          removeBtn.style.display = 'none';
+        }
+      });
+
+      // Удаление выбранного файла
+      removeBtn.addEventListener('click', () => {
+        fileInput.value = '';
+        preview.style.display = 'none';
+        removeBtn.style.display = 'none';
+        resultArea.className = 'alert mt-4 text-center d-none';
+        resultArea.innerHTML = '';
+      });
+
+      // Отправка на сервер
+      form.addEventListener('submit', async (e) => {
+        e.preventDefault();
+
+        const file = fileInput.files[0];
+        if (!file) {
+          resultArea.className = 'alert alert-warning mt-4 text-center';
+          resultArea.textContent = '⚠️ Пожалуйста, загрузите файл перед анализом.';
+          resultArea.style.display = 'block';
+          return;
+        }
+
+        analyzeBtn.disabled = true;
+        resultArea.className = 'alert alert-info mt-4 text-center';
+        resultArea.textContent = '💭 Анализирую...';
+        resultArea.style.display = 'block';
+
+        try {
+          const formData = new FormData();
+          formData.append('file', file, file.name);
+
+          const res = await fetch(API_URL, { method: 'POST', body: formData });
+
+          if (!res.ok) {
+            const text = await res.text();
+            resultArea.className = 'alert alert-danger mt-4 text-center';
+            resultArea.textContent = `Ошибка сервера (${res.status}): ${text}`;
+            return;
+          }
+
+          const data = await res.json();
+          // Ожидаем от API: { label, label_ru, prob }
+          console.log('API JSON:', data);
+
+          if (!('label' in data) || !('label_ru' in data) || !('prob' in data)) {
+            resultArea.className = 'alert alert-danger mt-4 text-center';
+            resultArea.textContent = 'Неожиданный формат ответа API.';
+            return;
+          }
+
+          const pct = (Number(data.prob) * 100).toFixed(1);
+
+          resultArea.className = 'alert alert-success mt-4 text-center';
+
+          if (data.label === "no_demented") {
+            resultArea.innerHTML = `
+              <h5>Результат: ${data.label_ru}</h5>
+              <p>Уверенность модели: <strong>${pct}%</strong></p>
+              <p>✅ Поздравляем, всё в порядке!</p>
+            `;
+          } else {
+            resultArea.innerHTML = `
+              <h5>Результат: ${data.label_ru}</h5>
+              <p>Уверенность модели: <strong>${pct}%</strong></p>
+              <p>Мы рекомендуем пройти программу когнитивного развития для пподдержки и замедления прогрессирования:</p>
+              <a href="program.html" class="btn btn-primary mt-2">Перейти к программе</a>
+            `;
+          }
+        } catch (err) {
+          resultArea.className = 'alert alert-danger mt-4 text-center';
+          resultArea.textContent = 'Ошибка при анализе: ' + (err?.message || err);
+        } finally {
+          analyzeBtn.disabled = false;
+        }
+      });
+    });
+  </script>
+</body>
+</html>
+

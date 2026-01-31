@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Когнитивный тест | MemoryCare</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet" />
+</head>
+<body>
+  <nav class="navbar navbar-light bg-white shadow-sm fixed-top"><div class="container"><a class="navbar-brand d-flex align-items-center" href="index.html"><img src="assets/memorycare1.jpeg" alt="MemoryCare" height="38" class="me-2" /></a></div></nav>
+  <main class="py-5 pt-nav"><div class="container"><div class="row justify-content-center"><div class="col-lg-9">
+    <div class="alz-card p-4">
+      <h2 class="fw-bold text-center mb-3">Онлайн‑оценка когнитивных функций</h2>
+      <p class="text-center mb-4">Тест из трёх этапов (~10 мин).</p>
+      <ul class="nav nav-pills nav-justified mb-4" id="stepTabs"><li class="nav-item"><button class="nav-link active" data-step="1">1 · MMSE/MoCA</button></li><li class="nav-item"><button class="nav-link" data-step="2">2 · Часы</button></li><li class="nav-item"><button class="nav-link" data-step="3">3 · Memory Game</button></li></ul>
+
+      <!-- STEP 1 -->
+<div class="step" id="step1">
+  <form id="mmseForm" novalidate>
+    <div class="mb-3">
+      <label class="form-label">1. Какой сегодня день недели?</label>
+      <input type="text" class="form-control" id="mmseQ1" required />
+      <div class="invalid-feedback">Заполните поле.</div>
+    </div>
+    <div class="mb-3">
+      <label class="form-label">2. В какой стране вы сейчас находитесь?</label>
+      <input type="text" class="form-control" id="mmseQ2" required />
+      <div class="invalid-feedback">Заполните поле.</div>
+    </div>
+    <div class="mb-3">
+      <label class="form-label">3. Сколько будет 871 минус 196?</label>
+      <input type="text" class="form-control" id="mmseQ3" required />
+      <div class="invalid-feedback">Заполните поле.</div>
+    </div>
+    <div class="mb-3">
+      <label class="form-label">4. Назовите два сходства между яблоком и апельсином.</label>
+      <input type="text" class="form-control" id="mmseQ4" required />
+      <div class="invalid-feedback">Заполните поле.</div>
+    </div>
+    <div class="mb-3">
+      <label class="form-label">5. Как называется столица Италии?</label>
+      <input type="text" class="form-control" id="mmseQ5" required />
+      <div class="invalid-feedback">Заполните поле.</div>
+    </div>
+    <div class="mb-3">
+      <label class="form-label">6. Напишите синонимы к этим трём словам: "Стол", "Собака", "Звезда".</label>
+      <input type="text" class="form-control" id="mmseQ6" required />
+      <div class="invalid-feedback">Заполните поле.</div>
+    </div>
+    <div class="mb-3">
+      <label class="form-label">7. Вычтите по 11 начиная со 200 и введите три первых результата.</label>
+      <input type="text" class="form-control" id="mmseQ7" required />
+      <div class="invalid-feedback">Заполните поле.</div>
+    </div>
+    <button type="button" class="btn alz-btn text-white next-step" data-next="2">Далее</button>
+  </form>
+</div>
+
+      <!-- STEP 2 -->
+      <div class="step d-none" id="step2">
+        <p>Нарисуйте часы, установив время <strong>10:10</strong>, и загрузите изображение.</p>
+        <input type="file" id="clockImg" class="form-control mb-3" accept=".jpg,.jpeg,.png" required />
+        <div class="invalid-feedback d-block" id="clockErr" style="display:none">Файл не выбран.</div>
+        <button type="button" class="btn alz-btn text-white next-step" data-next="3">Далее</button>
+      </div>
+
+      <!-- STEP 3 -->
+      <div class="step d-none" id="step3">
+        <p class="mb-2">Найдите все пары карт (время и количество ходов учитываются).</p>
+        <div class="d-flex gap-3 mb-2 small"><span>Ходы: <strong id="moveCount">0</strong></span><span>Открыто: <strong id="matched">0/6</strong></span></div>
+        <div id="gameGrid" class="memory-grid mb-3"></div>
+        <button type="button" class="btn btn-outline-secondary mb-3" id="restartGame">Сбросить</button>
+        <button type="button" class="btn alz-btn text-white" id="finishTest" disabled>Завершить</button>
+      </div>
+
+      <div id="cogResult" class="alert alert-info mt-4 d-none"></div>
+    </div>
+  </div></div></div></main>
+  <script src="https://cdn.jsdelivr.net/npm/marked@4.0.12/lib/marked.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="cognitive.js"></script>
+</body>
+</html>

@@ -1,0 +1,24 @@
+# virtual env
+.venv/
+venv/
+
+# python cache
+__pycache__/
+*.pyc
+
+# datasets / large folders
+2AlzAIremont/train/
+2AlzAIremont/valid/
+2AlzAIremont/test/
+
+# models / weights
+*.h5
+*.keras
+*.ckpt
+*.pth
+*.pt
+
+# logs / temp
+*.log
+.DS_Store
+Thumbs.db

@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>MemoryCare – Платформа ранней диагностики болезни Альцгеймера</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet" />
+  <!-- AOS for scroll animations -->
+  <link href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css" rel="stylesheet" />
+</head>
+<body>
+  <!-- NAVBAR -->
+  <nav class="navbar navbar-light bg-white shadow-sm fixed-top">
+    <div class="container">
+      <a class="navbar-brand d-flex align-items-center" href="index.html"><img src="assets/memorycare1.jpeg" alt="MemoryCare" height="38" class="me-2" /></a>
+      <div class="d-none d-md-flex gap-3 small">
+        <a href="#problem" class="link-dark">Проблема</a>
+        <a href="#timeline" class="link-dark">Этапы</a>
+        <a href="program.html" class="link-dark">Программа когнитивного развития</a>
+        <a href="#faq" class="link-dark">FAQ</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <header class="hero text-center pt-nav">
+    <div class="container" data-aos="fade-up">
+      <h1 class="display-5 fw-bold mb-2">Ранняя диагностика Альцгеймера <span class="text-primary">в один клик</span></h1>
+      <p class="lead mb-4">MemoryCare объединяет силу ИИ‑моделей и интерактивных когнитивных тестов, чтобы сделать скрининг доступным каждому.</p>
+      <a href="analyze.html" class="btn btn-lg alz-btn text-white me-2">Проверить снимок</a>
+      <a href="cognitive.html" class="btn btn-outline-secondary btn-lg">Пройти тест</a>
+    </div>
+  </header>
+
+  <!-- PROBLEM STATS -->
+  <section id="problem" class="py-5 section-alt">
+    <div class="container" data-aos="fade-up">
+      <h2 class="fw-bold text-center mb-4">Почему мы запустили MemoryCare</h2>
+      <div class="row g-4 text-center">
+        <div class="col-md-4"><div class="stat-card p-4 h-100"><h3 class="display-6 fw-bold text-primary">70K+</h3><p class="small mb-0">пациентов с деменцией в Казахстане</p></div></div>
+        <div class="col-md-4"><div class="stat-card p-4 h-100"><h3 class="display-6 fw-bold text-primary">85 %</h3><p class="small mb-0">случаев выявляются поздно</p></div></div>
+        <div class="col-md-4"><div class="stat-card p-4 h-100"><h3 class="display-6 fw-bold text-primary">30 000 ₸</h3><p class="small mb-0">средняя стоимость МРТ‑диагностики</p></div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- TIMELINE -->
+  <section id="timeline" class="py-5">
+    <div class="container" data-aos="fade-up">
+      <h2 class="fw-bold text-center mb-5">Наш путь</h2>
+      <div class="timeline">
+        <div class="tl-item" data-aos="fade-right">
+          <div class="tl-icon bg-primary text-white">Ноябрь <br> 2024</div>
+          <div class="tl-content"><h6 class="fw-semibold">Идея проекта</h6><p class="small mb-0">Фиксация проблемы поздней диагностики болезни Альцгеймера в Казахстане.
+
+          </p></div>
+        </div>
+        <div class="tl-item" data-aos="fade-left">
+          <div class="tl-icon bg-primary text-white">Январь <br> 2025</div>
+          <div class="tl-content"><h6 class="fw-semibold">Начало разработки</h6><p class="small mb-0">Создание ИИ‑модели для анализа МРТ</p></div>
+        </div>
+        <div class="tl-item" data-aos="fade-right">
+          <div class="tl-icon bg-primary text-white">Март <br> 2025</div>
+          <div class="tl-content"><h6 class="fw-semibold">Подготовка данных</h6><p class="small mb-0">Сбор открытых датасетов МРТ</p></div>
+        </div>
+        <div class="tl-item" data-aos="fade-left">
+          <div class="tl-icon bg-primary text-white">Апрель <br> 2025</div>
+          <div class="tl-content"><h6 class="fw-semibold">Стабильная версия</h6><p class="small mb-0">Разработка полной платформы: ИИ‑анализ снимков, когнитивные тесты, веб-интерфейс.</p></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA PARALLAX -->
+  <section class="parallax-cta text-center text-white d-flex flex-column justify-content-center align-items-center">
+    <h2 class="display-6 fw-bold mb-3" data-aos="zoom-in">Чем раньше — тем лучше</h2>
+    <p class="mb-4" data-aos="zoom-in" data-aos-delay="150">Начните скрининг сегодня и получите персональные рекомендации.</p>
+    <a href="cognitive.html" class="btn btn-lg btn-light" data-aos="zoom-in" data-aos-delay="300">Пройти тест</a>
+  </section>
+
+  <!-- FAQ (оставляем) -->
+  <section id="faq" class="py-5">
+    <div class="container" data-aos="fade-up">
+      <h2 class="fw-bold text-center mb-4">FAQ</h2>
+      <div class="accordion" id="faqAcc">
+        <!-- вопросы как раньше -->
+        <div class="accordion-item"><h2 class="accordion-header" id="q1"><button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#a1" aria-expanded="true">Насколько точна модель?</button></h2><div id="a1" class="accordion-collapse collapse show" data-bs-parent="#faqAcc"><div class="accordion-body small">Точность 97 %. Модель обновляется ежеквартально.</div></div></div>
+        <div class="accordion-item"><h2 class="accordion-header" id="q2"><button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#a2">Как защищаются данные?</button></h2><div id="a2" class="accordion-collapse collapse" data-bs-parent="#faqAcc"><div class="accordion-body small">Файлы шифруются и удаляются через 30 минут после анализа.</div></div></div>
+        <div class="accordion-item"><h2 class="accordion-header" id="q3"><button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#a3">Можно ли использовать в клинике?</button></h2><div id="a3" class="accordion-collapse collapse" data-bs-parent="#faqAcc"><div class="accordion-body small">Да, предоставляем Docker‑образ и API.</div></div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="text-center py-4 small bg-white">
+    <div class="container">© 2025 MemoryCare · MIT · <a href="#" class="link-secondary">GitHub</a></div>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
+  <script> AOS.init({ once:true, duration:800, offset:120 }); </script>
+</body>
+</html>
