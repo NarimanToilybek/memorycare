@@ -8,13 +8,42 @@ import tensorflow as tf
 from tensorflow.keras.applications.vgg16 import preprocess_input
 
 # === ПУТЬ К ЛУЧШЕЙ МОДЕЛИ (epoch5) ===
-MODEL_PATH = "alz_vgg16_epoch5.h5"
+from pathlib import Path
+import os
+
+# Папка где лежит server.py
+BASE_DIR = Path(__file__).resolve().parent
+
+# Куда сохраняем модель на Render
+MODEL_DIR = BASE_DIR / "models"
+MODEL_DIR.mkdir(exist_ok=True)
+
+MODEL_FILENAME = "alz_vgg16_epoch5.h5"
+MODEL_PATH = MODEL_DIR / MODEL_FILENAME
+
+# 1) В Render -> Environment добавишь переменную GDRIVE_MODEL_ID
+GDRIVE_MODEL_ID = os.getenv("GDRIVE_MODEL_ID", "").strip()
+
+def ensure_model():
+    if MODEL_PATH.exists():
+        return
+
+    if not GDRIVE_MODEL_ID:
+        raise RuntimeError("GDRIVE_MODEL_ID is not set, and model file is missing.")
+
+    # gdown умеет качать большие файлы с Drive (с confirm-страницей)
+    import gdown
+    url = f"https://drive.google.com/uc?id={GDRIVE_MODEL_ID}"
+    gdown.download(url, str(MODEL_PATH), quiet=False)
+
+# Скачиваем (если надо) и только потом грузим модель
+ensure_model()
+model = tf.keras.models.load_model(str(MODEL_PATH), compile=False)
+
 
 # Порядок классов (как при обучении): алфавит по именам папок
 CLASS_NAMES = ["mild_demented", "moderate_demented", "no_demented", "very_mild_demented"]
 IMG_SIZE = (224, 224)
-
-model = tf.keras.models.load_model(MODEL_PATH, compile=False)
 
 app = FastAPI()
 app.add_middleware(
