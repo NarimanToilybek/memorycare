@@ -68,7 +68,7 @@
     AOS.init({ once: true, duration: 700, easing: 'ease-out-cubic' });
 
     document.addEventListener('DOMContentLoaded', () => {
-      const API_URL   = 'http://127.0.0.1:8000/predict'; // эндпоинт FastAPI
+      const API_URL   = '/predict'; // тот же домен/порт, что и страница
       const fileInput = document.getElementById('mriFile');
       const preview   = document.getElementById('mriPreview');
       const removeBtn = document.getElementById('removeBtn');
@@ -169,4 +169,3 @@
   </script>
 </body>
 </html>
-
