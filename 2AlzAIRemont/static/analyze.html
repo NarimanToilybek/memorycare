@@ -68,6 +68,12 @@
     AOS.init({ once: true, duration: 700, easing: 'ease-out-cubic' });
 
     document.addEventListener('DOMContentLoaded', () => {
+      const LABELS_RU = {
+        no_demented: 'Без деменции',
+        very_mild_demented: 'Очень лёгкая деменция',
+        mild_demented: 'Лёгкая деменция',
+        moderate_demented: 'Умеренная деменция'
+      };
       const API_URL   = '/predict'; // тот же домен/порт, что и страница
       const fileInput = document.getElementById('mriFile');
       const preview   = document.getElementById('mriPreview');
@@ -133,6 +139,13 @@
           const data = await res.json();
           // Ожидаем от API: { label, label_ru, prob }
           console.log('API JSON:', data);
+
+          if (!('label_ru' in data) && data.label && data.label in LABELS_RU) {
+            data.label_ru = LABELS_RU[data.label];
+          }
+          if (!('prob' in data) && data.probs && data.label && data.label in data.probs) {
+            data.prob = data.probs[data.label];
+          }
 
           if (!('label' in data) || !('label_ru' in data) || !('prob' in data)) {
             resultArea.className = 'alert alert-danger mt-4 text-center';

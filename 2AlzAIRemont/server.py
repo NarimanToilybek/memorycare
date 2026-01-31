@@ -17,7 +17,6 @@ BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 STATIC_DIR = os.path.join(BASE_DIR, "static")
 MODELS_DIR = os.path.join(BASE_DIR, "models")
 
-app.mount("/", StaticFiles(directory=STATIC_DIR, html=True), name="static")
 
 # ===== MODEL =====
 MODEL_NAME = "alz_vgg16_epoch5.h5"
@@ -60,3 +59,6 @@ async def predict(file: UploadFile = File(...)):
         "prob": float(preds[idx]),
         "probs": {CLASS_NAMES[i]: float(preds[i]) for i in range(4)}
     }
+
+# Mount static after API routes so /predict is not shadowed by StaticFiles
+app.mount("/", StaticFiles(directory=STATIC_DIR, html=True), name="static")
