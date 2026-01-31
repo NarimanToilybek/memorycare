@@ -11,6 +11,14 @@ from fastapi.middleware.cors import CORSMiddleware
 import tensorflow as tf
 from tensorflow.keras.applications.vgg16 import preprocess_input
 
+from fastapi import FastAPI
+from fastapi.staticfiles import StaticFiles
+
+app = FastAPI()
+
+app.mount("/", StaticFiles(directory="static", html=True), name="static")
+
+
 from fastapi.responses import FileResponse
 from fastapi.staticfiles import StaticFiles
 
